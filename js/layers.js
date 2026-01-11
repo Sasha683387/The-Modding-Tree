@@ -6,7 +6,7 @@ addLayer("p", {
         unlocked: true,
 		points: new Decimal(0),
     }},
-    color: "#4BDC13",
+    color: "#0004ff",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "prestige points", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
@@ -24,5 +24,61 @@ addLayer("p", {
     hotkeys: [
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true}
+    layerShown(){return true},
+        upgrades: {
+        11: {
+        title: "(#1) The First Difficulty",
+        description: "Double your point gain.",
+        cost: new Decimal(1),
+        },
+        12: {
+        title: "(#2) The First Difficulty",
+        description: "x1.5 your point gain",
+        cost: new Decimal(2),
+        },
+        13: {
+        title: "(#3) The First Difficulty",
+        description: "Double your point gain again",
+        cost: new Decimal(4),
+        },
+        14: {
+        title: "(#4) The Lower Gap",
+        description: "x3 your point gain",
+        cost: new Decimal(5),
+        },
+        15: {
+        title: "(#5) The Lower Gap",
+        description: "Double your point gain yet again",
+        cost: new Decimal(7),
+        },
+        21: {
+        title: "(#6) The Lower Gap",
+        description: "Double your point gain yet yet again",
+        cost: new Decimal(10),
+        },
+        22: {
+        title: "(#7) The Lower Gap",
+        description: "Double your point gain yet yet yet again",
+        cost: new Decimal(12),
+        },
+        23: {
+        title: "(#8) The Lower Gap",
+        description: "Double your point gain yet yet yet yet again",
+        cost: new Decimal(15),
+        },
+        24: {
+        title: "(#9) Negativity",
+        description: "x1.01 point gain:)",
+        cost: new Decimal(20),
+        },
+        25: {
+        title: "(#10) Negativity",
+        description: "Boost your points by prestige points.(slightly)",
+        cost: new Decimal(28),
+            effect() {
+        return player[this.layer].points.add(1).pow(0.2)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+        },
+    },
 })
