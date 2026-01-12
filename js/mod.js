@@ -12,11 +12,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1",
+	num: "0.2",
 	name: "First layer",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.2</h3><br>
+		- Added 34 upgrades.<br>
+		Have fun!
 	<h3>v0.1</h3><br>
 		- Added 10 upgrades.<br>
 		- Thats it.`
@@ -40,7 +43,6 @@ function canGenPoints(){
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
-
 	let gain = new Decimal(1)
 	if (hasUpgrade('p', 11)) gain = gain.times(2)
 	if (hasUpgrade('p', 12)) gain = gain.times(1.5)
@@ -52,7 +54,16 @@ function getPointGen() {
 	if (hasUpgrade('p', 23)) gain = gain.times(2)
 	if (hasUpgrade('p', 24)) gain = gain.times(1.01)
 	if (hasUpgrade('p', 25)) gain = gain.times(upgradeEffect('p', 25))
-
+	if (hasUpgrade('p', 31)) gain = gain.times(1.4)
+	if (hasUpgrade('p', 32)) gain = gain.times(3.14)
+	if (hasUpgrade('p', 33)) gain = gain.times(2.71828)
+	if (hasUpgrade('p', 34)) gain = gain.times(10)
+	if (hasUpgrade('p', 35)) gain = gain.times(2.123)
+	if (hasUpgrade('p', 41)) gain = gain.times(upgradeEffect('p', 41))
+	if (hasUpgrade('p', 42)) gain = gain.times(6.21)
+	if (hasUpgrade('p', 43)) gain = gain.times(2.22)
+	if (hasUpgrade('p', 44)) gain = gain.times(1.23)
+	if (hasUpgrade('p', 45)) gain = gain.times(6)
 	return gain
 }
 

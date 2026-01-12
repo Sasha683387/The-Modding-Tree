@@ -80,5 +80,58 @@ addLayer("p", {
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
+        31: {
+        title: "(#11) Negativity",
+        description: "x1.4 your point gain",
+        cost: new Decimal(57),
+        },
+        32: {
+        title: "(#12) Negativity",
+        description: "x3.14 your point gain",
+        cost: new Decimal(94),
+        },
+        33: {
+        title: "(#13) Unimpossible",
+        description: "x2.71828 your point gain",
+        cost: new Decimal(154),
+        },
+        34: {
+        title: "(#14) Unimpossible",
+        description: "x10 your point gain",
+        cost: new Decimal(208),
+        },
+        35: {
+        title: "(#15) Friendliness",
+        description: "x2.123 your point gain",
+        cost: new Decimal(702),
+        },
+        41: {
+        title: "(#16) Friendliness",
+        description: "Boost your points gain by prestige more",
+        cost: new Decimal(1423),
+            effect() {
+        return player[this.layer].points.add(1).pow(0.25)
     },
-})
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+        },
+        42: {
+        title: "(#17) Friendliness",
+        description: "x6.21 your point gain",
+        cost: new Decimal(2103),
+        },
+        43: {
+        title: "(#18) True Ease",
+        description: "x2.22 your point gain",
+        cost: new Decimal(3431),
+        },
+        44: {
+        title: "(#19) True Ease",
+        description: "x1.23 point gain",
+        cost: new Decimal(4831),
+        },
+        45: {
+        title: "(#20) True Ease",
+        description: "x6 point gain",
+        cost: new Decimal(7321),
+    },
+}})
