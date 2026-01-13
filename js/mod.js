@@ -12,13 +12,15 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.2",
-	name: "First layer",
+	num: "0.21",
+	name: "Small fix",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.2</h3><br>
-		- Added 34 upgrades.<br>
+		- Fixed the changelog.<br>
+	<h3>v0.2</h3><br>
+		- Added 10 upgrades.<br>
 		Have fun!
 	<h3>v0.1</h3><br>
 		- Added 10 upgrades.<br>
