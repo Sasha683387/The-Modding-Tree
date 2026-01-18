@@ -49,32 +49,32 @@ addLayer("p", {
         15: {
         title: "(#5) The Lower Gap",
         description: "Double your point gain yet again",
-        cost: new Decimal(7),
+        cost: new Decimal(9),
         },
         21: {
         title: "(#6) The Lower Gap",
         description: "Double your point gain yet yet again",
-        cost: new Decimal(10),
+        cost: new Decimal(15),
         },
         22: {
         title: "(#7) The Lower Gap",
         description: "Double your point gain yet yet yet again",
-        cost: new Decimal(12),
+        cost: new Decimal(19),
         },
         23: {
         title: "(#8) The Lower Gap",
         description: "Double your point gain yet yet yet yet again",
-        cost: new Decimal(15),
+        cost: new Decimal(24),
         },
         24: {
         title: "(#9) Negativity",
         description: "x1.01 point gain:)",
-        cost: new Decimal(20),
+        cost: new Decimal(32),
         },
         25: {
         title: "(#10) Negativity",
         description: "Boost your points by prestige points.(slightly)",
-        cost: new Decimal(28),
+        cost: new Decimal(35),
             effect() {
         return player[this.layer].points.add(1).pow(0.2)
     },
@@ -83,27 +83,27 @@ addLayer("p", {
         31: {
         title: "(#11) Negativity",
         description: "x1.4 your point gain",
-        cost: new Decimal(57),
+        cost: new Decimal(65),
         },
         32: {
         title: "(#12) Negativity",
         description: "x3.14 your point gain",
-        cost: new Decimal(94),
+        cost: new Decimal(104),
         },
         33: {
         title: "(#13) Unimpossible",
         description: "x2.71828 your point gain",
-        cost: new Decimal(154),
+        cost: new Decimal(168),
         },
         34: {
         title: "(#14) Unimpossible",
         description: "x10 your point gain",
-        cost: new Decimal(208),
+        cost: new Decimal(295),
         },
         35: {
         title: "(#15) Friendliness",
         description: "x2.123 your point gain",
-        cost: new Decimal(702),
+        cost: new Decimal(893),
         },
         41: {
         title: "(#16) Friendliness",
@@ -117,21 +117,21 @@ addLayer("p", {
         42: {
         title: "(#17) Friendliness",
         description: "x6.21 your point gain",
-        cost: new Decimal(2103),
+        cost: new Decimal(3673),
         },
         43: {
         title: "(#18) True Ease",
         description: "x2.22 your point gain",
-        cost: new Decimal(3431),
+        cost: new Decimal(5921),
         },
         44: {
         title: "(#19) True Ease",
         description: "x1.23 point gain",
-        cost: new Decimal(4831),
+        cost: new Decimal(9371),
         },
         45: {
         title: "(#20) True Ease",
         description: "x6 point gain",
-        cost: new Decimal(7321),
+        cost: new Decimal(14927),
     },
 }})
