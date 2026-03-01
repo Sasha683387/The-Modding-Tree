@@ -12,18 +12,34 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.22",
-	name: "Waste your time!",
+	num: "0.3",
+	name: "Super Prestige Points",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.3</h3><br>
+		Plans on the next update:<br>
+
+		New layer<br>
+		Much more upgrades<br>
+		New mechanics<br>
+		Balance the game<br>
+		(next update: 03.03.26 or 04.03.26)<br><br><br>
+
+
+		- Sorry for the long break:D<br>
+		- Actually fixed the changelog.<br>
+		- Added Super Prestige layer!.<br>
+		- WITH ONLY 3 UPGRADES???<br>
+		- Super-Hyper-Omega upgrade in Super Prestige layer<br>
+		- MAKE THE GAME EVEN LONGER!!!!!!!!<br>
 	<h3>v0.22</h3><br>
 		- Make the game longer!<br>
 	<h3>v0.21</h3><br>
 		- Fixed the changelog.<br>
 	<h3>v0.2</h3><br>
 		- Added 10 upgrades.<br>
-		Have fun!
+		- Have fun!<br>
 	<h3>v0.1</h3><br>
 		- Added 10 upgrades.<br>
 		- Thats it.`
@@ -68,6 +84,13 @@ function getPointGen() {
 	if (hasUpgrade('p', 43)) gain = gain.times(2.22)
 	if (hasUpgrade('p', 44)) gain = gain.times(1.23)
 	if (hasUpgrade('p', 45)) gain = gain.times(6)
+	if (hasUpgrade('p', 51)) gain = gain.times(1e10)
+	if (hasUpgrade('p', 52)) gain = gain.times(1.015)
+	if (hasUpgrade('p', 53)) gain = gain.times(1.001)
+	if (hasUpgrade('sp', 11)) gain = gain.times(3)
+	if (hasUpgrade('sp', 12)) gain = gain.times(10)
+	if (hasUpgrade('sp', 13)) gain = gain.times(upgradeEffect('sp', 13))
+	
 	return gain
 }
 
