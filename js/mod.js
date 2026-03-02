@@ -12,21 +12,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.3",
-	name: "Super Prestige Points",
+	num: "0.4",
+	name: "Expanding Super Prestige Points",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.4</h3><br>
+		- Make the Prestige layer finally balanced!!!<br>
+		- Added new upgrades in SP layer<br>
+		- New update coming soon and have fun!<br>
 	<h3>v0.3</h3><br>
-		Plans on the next update:<br>
-
-		New layer<br>
-		Much more upgrades<br>
-		New mechanics<br>
-		Balance the game<br>
-		(next update: 03.03.26 or 04.03.26)<br><br><br>
-
-
 		- Sorry for the long break:D<br>
 		- Actually fixed the changelog.<br>
 		- Added Super Prestige layer!.<br>
@@ -90,6 +85,13 @@ function getPointGen() {
 	if (hasUpgrade('sp', 11)) gain = gain.times(3)
 	if (hasUpgrade('sp', 12)) gain = gain.times(10)
 	if (hasUpgrade('sp', 13)) gain = gain.times(upgradeEffect('sp', 13))
+	if (hasUpgrade('sp', 14)) gain = gain.times(5)
+	if (hasUpgrade('sp', 15)) gain = gain.times(3)
+	if (hasUpgrade('sp', 21)) gain = gain.times(2.7)
+	if (hasUpgrade('sp', 22)) gain = gain.times(5)
+	if (hasUpgrade('sp', 23)) gain = gain.times(2.5)
+	if (hasUpgrade('sp', 24)) gain = gain.times(1.5)
+	if (hasUpgrade('sp', 25)) gain = gain.times(1.75)
 	
 	return gain
 }

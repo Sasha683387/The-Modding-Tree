@@ -25,6 +25,11 @@ addLayer("p", {
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true},
+    passiveGeneration(){
+    let passive = new Decimal(0)
+    if (hasUpgrade("sp", 15)) passive = passive.add(0.05) //10% Prestige Points depending on Reset
+    return passive
+    },
         upgrades: {
         11: {
         title: "(#1) The First Difficulty",
@@ -44,37 +49,37 @@ addLayer("p", {
         14: {
         title: "(#4) The Lower Gap",
         description: "x3 your point gain",
-        cost: new Decimal(5),
+        cost: new Decimal(7),
         },
         15: {
         title: "(#5) The Lower Gap",
         description: "Double your point gain yet again",
-        cost: new Decimal(9),
+        cost: new Decimal(15),
         },
         21: {
         title: "(#6) The Lower Gap",
         description: "Double your point gain yet yet again",
-        cost: new Decimal(15),
+        cost: new Decimal(34),
         },
         22: {
         title: "(#7) The Lower Gap",
         description: "Double your point gain yet yet yet again",
-        cost: new Decimal(19),
+        cost: new Decimal(51),
         },
         23: {
         title: "(#8) The Lower Gap",
         description: "Double your point gain yet yet yet yet again",
-        cost: new Decimal(24),
+        cost: new Decimal(82),
         },
         24: {
         title: "(#9) Negativity",
         description: "x1.01 point gain:)",
-        cost: new Decimal(43),
+        cost: new Decimal(160),
         },
         25: {
         title: "(#10) Negativity",
         description: "Boost your points by prestige points.(slightly)",
-        cost: new Decimal(68),
+        cost: new Decimal(175),
             effect() {
         return player[this.layer].points.add(1).pow(0.1)
     },
@@ -83,32 +88,32 @@ addLayer("p", {
         31: {
         title: "(#11) Negativity",
         description: "x1.4 your point gain",
-        cost: new Decimal(109),
+        cost: new Decimal(275),
         },
         32: {
         title: "(#12) Negativity",
         description: "x3.14 your point gain",
-        cost: new Decimal(167),
+        cost: new Decimal(450),
         },
         33: {
         title: "(#13) Unimpossible",
         description: "x2.71828 your point gain",
-        cost: new Decimal(297),
+        cost: new Decimal(1103),
         },
         34: {
         title: "(#14) Unimpossible",
         description: "x10 your point gain",
-        cost: new Decimal(571),
+        cost: new Decimal(2591),
         },
         35: {
         title: "(#15) Friendliness",
         description: "x2.123 your point gain",
-        cost: new Decimal(1213),
+        cost: new Decimal(11500),
         },
         41: {
         title: "(#16) Friendliness",
         description: "Boost your points gain by prestige more",
-        cost: new Decimal(2051),
+        cost: new Decimal(25000),
             effect() {
         return player[this.layer].points.add(1).pow(0.15)
     },
@@ -117,22 +122,22 @@ addLayer("p", {
         42: {
         title: "(#17) Friendliness",
         description: "x6.21 your point gain",
-        cost: new Decimal(5028),
+        cost: new Decimal(75950),
         },
         43: {
         title: "(#18) True Ease",
         description: "x2.22 your point gain",
-        cost: new Decimal(8367),
+        cost: new Decimal(117000),
         },
         44: {
         title: "(#19) True Ease",
         description: "x1.23 point gain",
-        cost: new Decimal(14025),
+        cost: new Decimal(185000),
         },
         45: {
         title: "(#20) True Ease",
         description: "x6 point gain",
-        cost: new Decimal(25100),
+        cost: new Decimal(250000),
     },
         51: {
         title: "(#???) impossible",
@@ -142,12 +147,12 @@ addLayer("p", {
         52: {
         title: "(#21) True Ease",
         description: "x1.015 point gain",
-        cost: new Decimal(100000),
+        cost: new Decimal(475000),
     },
         53: {
         title: "(#NL1) New Layer",
         description: "Last upgrade before next layer. x1.001 point gain",
-        cost: new Decimal(175000),
+        cost: new Decimal(525000),
     },
 }})
 addLayer("sp", {
@@ -155,8 +160,8 @@ addLayer("sp", {
     symbol: "SP", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
-        unlocked: true,
-		points: new Decimal(0),
+        unlocked: false,
+		points: new Decimal(1e9),
     }},
     color: "#ff0000",
     requires: new Decimal(5e9), // Can be a function that takes requirement increases into account
@@ -196,5 +201,40 @@ addLayer("sp", {
         return player[this.layer].points.add(1).pow(1)
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+        },
+        14: {
+        title: "(#SP4) Pro tip: Hold P for automation",
+        description: "New layer, better boosts. x5 points",
+        cost: new Decimal(5),
+        },
+        15: {
+        title: "(#SP5) End of the ROW_1",
+        description: "x3 points and unlock Passive Gain!(5% PP/sec)",
+        cost: new Decimal(8),
+        },
+        21: {
+        title: "(#SP6) Start of the ROW_2",
+        description: "Hello again.",
+        cost: new Decimal(15),
+        },
+        22: {
+        title: "(#SP7) I ran out of upgrades",
+        description: "Hi. x10000-9995 points",
+        cost: new Decimal(20),
+        },
+        23: {
+        title: "(#SP8) name",
+        description: "descripX2.5tion",
+        cost: new Decimal(30),
+        },
+        24: {
+        title: "(#SP9) Pre-Last upgrade of SP",
+        description: "Pre-Last upgrade!!!",
+        cost: new Decimal(75),
+        },
+        25: {
+        title: "(#SP10) The End for v0.4",
+        description: "this is a joke",
+        cost: new Decimal(150),
         },
 }})
