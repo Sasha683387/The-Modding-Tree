@@ -17,6 +17,11 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h2>v0.5</h2><br>
+	- Really make the PP layer balanced!<br>
+	- Added new layer: HPP!<br>
+	- Fixed the SP upgrades<br>
+	- Added around 10 upgrades(i dont remember)<br>
 	<h3>v0.4</h3><br>
 		- Make the Prestige layer finally balanced!!!<br>
 		- Added new upgrades in SP layer<br>
@@ -89,10 +94,18 @@ function getPointGen() {
 	if (hasUpgrade('sp', 15)) gain = gain.times(3)
 	if (hasUpgrade('sp', 21)) gain = gain.times(2.7)
 	if (hasUpgrade('sp', 22)) gain = gain.times(5)
-	if (hasUpgrade('sp', 23)) gain = gain.times(2.5)
-	if (hasUpgrade('sp', 24)) gain = gain.times(1.5)
-	if (hasUpgrade('sp', 25)) gain = gain.times(1.75)
-	
+	if (hasUpgrade('sp', 23)) gain = gain.times(10)
+	if (hasUpgrade('sp', 24)) gain = gain.times(5)
+	if (hasUpgrade('sp', 25)) gain = gain.times(4)
+	if (hasUpgrade('sp', 32)) gain = gain.times(6)
+	if (hasUpgrade('sp', 33)) gain = gain.times(10)
+	if (hasUpgrade('sp', 34)) gain = gain.times(5)
+	if (hasUpgrade('hp', 11)) gain = gain.times(5)
+	if (hasUpgrade('hp', 12)) gain = gain.times(2)
+	if (hasUpgrade('hp', 13)) gain = gain.times(2.22)
+	if (hasUpgrade('hp', 14)) gain = gain.times(2.222)
+	if (hasUpgrade('hp', 15)) gain = gain.times(2.22222)
+
 	return gain
 }
 
