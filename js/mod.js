@@ -12,11 +12,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.4",
-	name: "Expanding Super Prestige Points",
+	num: "0.5",
+	name: "The Chaos Of The SP and HP",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.51</h3><br>
+	- Small fixes
 	<h2>v0.5</h2><br>
 	- Really make the PP layer balanced!<br>
 	- Added new layer: HPP!<br>
@@ -119,7 +121,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("100"))
+	return player.points.gte(new Decimal("1e23"))
 }
 
 
