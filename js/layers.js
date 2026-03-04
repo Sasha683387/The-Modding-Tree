@@ -1,3 +1,64 @@
+addLayer("a", {
+    name: "Achievements",
+    symbol: "A",
+    row: "side",       // Puts it in side tab
+    color: "#ffaa00",
+
+    startData() {
+        return {
+            unlocked: true,
+        }
+    },
+
+    achievements: {
+
+        11: {
+            name: "First Steps",
+            tooltip: "Get 1 point",
+            done() { return player.points.gte(1) },   // condition
+        },
+
+        12: {
+            name: "Getting Stronger",
+            tooltip: "Buy Prestige Upgrade 14",
+            done() { return hasUpgrade("p", 14) },
+        },
+
+        13: {
+            name: "Getting Even Stronger",
+            tooltip: "Buy Prestige Upgrade 25",
+            done() { return hasUpgrade("p", 25) },
+        },
+        14: {
+            name: "Getting Too Strong",
+            tooltip: "Buy Prestige Upgrade 34",
+            done() { return hasUpgrade("p", 34) },
+        },
+        15: {
+            name: "Better Boost",
+            tooltip: "Buy Prestige Upgrade 41",
+            done() { return hasUpgrade("p", 41) },
+        },
+        21: {
+            name: "New Layer",
+            tooltip: "Buy Prestige Upgrade 45",
+            done() { return hasUpgrade("p", 45) },
+        },
+        22: {
+            name: "BIG boost",
+            tooltip: "Buy Super Prestige Upgrade 12",
+            done() { return hasUpgrade("sp", 12) },
+        },
+    },
+
+    // Optional: Achievements can affect gain
+    gainMult() {
+        let mult = new Decimal(1)
+        if (hasAchievement("a", 11)) mult = mult.times(1.2) // +20% gain
+        if (hasAchievement("a", 12)) mult = mult.times(1.5) // +50% gain
+        return mult
+    },
+})
 addLayer("p", {
     name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "P", // This appears on the layer's node. Default is the id with the first letter capitalized
@@ -25,6 +86,16 @@ addLayer("p", {
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true},
+    doReset(resettingLayer) {
+    if (layers[resettingLayer].row > this.row) {
+
+        // If you have the upgrade, do nothing
+        if (hasUpgrade("hp", 21)) return
+
+        // Otherwise reset normally
+        layerDataReset("hp", [])
+    }
+},
     autoUpgrade() {
     return hasUpgrade("sp", 21)
     },
@@ -44,46 +115,55 @@ addLayer("p", {
         title: "(#2) The First Difficulty",
         description: "x1.5 your point gain",
         cost: new Decimal(2),
+        unlocked() { return hasUpgrade("p", 11) },
         },
         13: {
         title: "(#3) The First Difficulty",
         description: "Double your point gain again",
         cost: new Decimal(4),
+        unlocked() { return hasUpgrade("p", 12) },
         },
         14: {
         title: "(#4) The Lower Gap",
         description: "x3 your point gain",
         cost: new Decimal(7),
+        unlocked() { return hasUpgrade("p", 13) },
         },
         15: {
         title: "(#5) The Lower Gap",
         description: "Double your point gain yet again",
         cost: new Decimal(15),
+        unlocked() { return hasUpgrade("p", 14) },
         },
         21: {
         title: "(#6) The Lower Gap",
         description: "Double your point gain yet yet again",
         cost: new Decimal(34),
+        unlocked() { return hasUpgrade("p", 15) },
         },
         22: {
         title: "(#7) The Lower Gap",
         description: "Double your point gain yet yet yet again",
         cost: new Decimal(51),
+        unlocked() { return hasUpgrade("p", 21) },
         },
         23: {
         title: "(#8) The Lower Gap",
         description: "Double your point gain yet yet yet yet again",
         cost: new Decimal(82),
+        unlocked() { return hasUpgrade("p", 22) },
         },
         24: {
         title: "(#9) Negativity",
         description: "x1.01 point gain:)",
         cost: new Decimal(160),
+        unlocked() { return hasUpgrade("p", 23) },
         },
         25: {
         title: "(#10) Negativity",
         description: "Boost your points by prestige points.(slightly)",
         cost: new Decimal(175),
+        unlocked() { return hasUpgrade("p", 24) },
             effect() {
         return player[this.layer].points.add(1).pow(0.1)
     },
@@ -93,31 +173,37 @@ addLayer("p", {
         title: "(#11) Negativity",
         description: "x1.4 your point gain",
         cost: new Decimal(225),
+        unlocked() { return hasUpgrade("p", 25) },
         },
         32: {
         title: "(#12) Negativity",
         description: "x3.14 your point gain",
         cost: new Decimal(275),
+        unlocked() { return hasUpgrade("p", 31) },
         },
         33: {
         title: "(#13) Unimpossible",
         description: "x2.71828 your point gain",
-        cost: new Decimal(400)
+        cost: new Decimal(400),
+        unlocked() { return hasUpgrade("p", 32) },
         },
         34: {
         title: "(#14) Unimpossible",
         description: "x10 your point gain",
         cost: new Decimal(625),
+        unlocked() { return hasUpgrade("p", 33) },
         },
         35: {
         title: "(#15) Friendliness",
         description: "x2.123 your point gain",
         cost: new Decimal(1250),
+        unlocked() { return hasUpgrade("p", 34) },
         },
         41: {
         title: "(#16) Friendliness",
         description: "Boost your points gain by prestige more",
         cost: new Decimal(1500),
+        unlocked() { return hasUpgrade("p", 35) },
             effect() {
         return player[this.layer].points.add(1).pow(0.15)
     },
@@ -127,36 +213,37 @@ addLayer("p", {
         title: "(#17) Friendliness",
         description: "x6.21 your point gain",
         cost: new Decimal(2200),
+        unlocked() { return hasUpgrade("p", 41) },
         },
         43: {
         title: "(#18) True Ease",
         description: "x2.22 your point gain",
         cost: new Decimal(3560),
+        unlocked() { return hasUpgrade("p", 42) },
         },
         44: {
         title: "(#19) True Ease",
         description: "x1.23 point gain",
         cost: new Decimal(4620),
+        unlocked() { return hasUpgrade("p", 43) },
         },
         45: {
         title: "(#20) True Ease",
         description: "x6 point gain",
         cost: new Decimal(5500),
+        unlocked() { return hasUpgrade("p", 44) },
     },
         51: {
-        title: "(#???) impossible",
-        description: "x1e10 point gain",
-        cost: new Decimal(1e308),
-    },
-        52: {
         title: "(#21) True Ease",
         description: "x1.015 point gain",
         cost: new Decimal(6750),
+        unlocked() { return hasUpgrade("p", 45) },
     },
-        53: {
+        52: {
         title: "(#NL1) New Layer",
         description: "Last upgrade before next layer. x1.001 point gain",
         cost: new Decimal(7150),
+        unlocked() { return hasUpgrade("p", 51) },
     },
 }})
 addLayer("sp", {
@@ -199,11 +286,13 @@ addLayer("sp", {
         title: "(#SP2) New layer!!!*10",
         description: "x10 point gain(strong!)",
         cost: new Decimal(2),
+        unlocked() { return hasUpgrade("sp", 11) },
         },
         13: {
         title: "(#SP3) This boost again:cry:",
         description: "Boost your points gain by super prestige",
         cost: new Decimal(3),
+        unlocked() { return hasUpgrade("sp", 12) },
             effect() {
         return player[this.layer].points.add(1).pow(1)
     },
@@ -213,56 +302,67 @@ addLayer("sp", {
         title: "(#SP4) Pro tip: Hold P for automation",
         description: "New layer, better boosts. x5 points",
         cost: new Decimal(5),
+        unlocked() { return hasUpgrade("sp", 13) },
         },
         15: {
         title: "(#SP5) End of the ROW_1",
         description: "x3 points and unlock Passive Gain!(5% PP/sec)",
         cost: new Decimal(8),
+        unlocked() { return hasUpgrade("sp", 14) },
         },
         21: {
         title: "(#SP6) Start of the ROW_2",
         description: "Hello again. Autobuy Prestige upgrades",
         cost: new Decimal(10),
+        unlocked() { return hasUpgrade("sp", 15) },
         },
         22: {
         title: "(#SP7) I ran out of upgrades",
         description: "Hi. x10000-9995 points",
         cost: new Decimal(15),
+        unlocked() { return hasUpgrade("sp", 21) },
         },
         23: {
         title: "(#SP8) name",
         description: "A x10 point boost to progress further",
         cost: new Decimal(18),
+        unlocked() { return hasUpgrade("sp", 22) },
         },
         24: {
         title: "(#SP9) Pre-Last upgrade of SP",
         description: "Pre-Last upgrade!!!",
         cost: new Decimal(25),
+        unlocked() { return hasUpgrade("sp", 23) },
         },
         25: {
         title: "(#SP10) The End for v0.4",
         description: "this is a joke",
         cost: new Decimal(30),
+        unlocked() { return hasUpgrade("sp", 24) },
         },
         31: {
         title: "(#SP11) Super Pro tip: Hold S for automation",
         description: "Upgrade your passive gain to 10%",
         cost: new Decimal(35),
+        unlocked() { return hasUpgrade("sp", 25) },
         },
         32: {
         title: "(#SP12) Faster Resets",
         description: "x6 point gain and ...",
         cost: new Decimal(38),
+        unlocked() { return hasUpgrade("sp", 31) },
         },
         33: {
         title: "(#SP13) Even Faster Resets",
         description: "New layer soon!!!(x10 points)",
         cost: new Decimal(40),
+        unlocked() { return hasUpgrade("sp", 32) },
         },
         34: {
         title: "(#NL2) Last upgrade before the next layer!!!",
         description: "x5 point gain",
         cost: new Decimal(50),
+        unlocked() { return hasUpgrade("sp", 33) },
         },
 }})
 addLayer("hp", {
@@ -292,6 +392,19 @@ addLayer("hp", {
         {key: "h", description: "H: Reset for hyper prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true},
+    milestones: {
+    0: {
+        requirementDescription: "100 Hyper Prestige Points",
+        done() { return player.p.points.gte(100) },
+        effectDescription: "First milestone! x5 HPP gain.",
+    },
+},
+gainMult() {
+    let mult = new Decimal(1)
+     if (hasMilestone("hp", 0))
+        mult = mult.times(5)
+    return mult
+},
     upgrades: {
         11: {
         title: "(#HP1) New layer again!!!",
@@ -302,22 +415,31 @@ addLayer("hp", {
         title: "(#HP2) When is upgrade to passive gain?",
         description: "Basic upgrade!!! x2 point gain",
         cost: new Decimal(2),
+        unlocked() { return hasUpgrade("hp", 11) },
         },
         13: {
         title: "(#HP3) Basic upgrade again",
         description: "x2.22 point gain",
         cost: new Decimal(3),
+        unlocked() { return hasUpgrade("hp", 12) },
         },
         14: {
         title: "(#HP4) BUAA",
         description: "x2.222 point gain",
         cost: new Decimal(4),
+        unlocked() { return hasUpgrade("hp", 13) },
         },
         15: {
         title: "(#HP5) This is The Double Tree",
         description: "(End of the v0.5) x2.22222 point gain",
         cost: new Decimal(5),
+        unlocked() { return hasUpgrade("hp", 14) },
         },
-
+        21: {
+        title: "(#HP6) More Easier",
+        description: "(End of the v0.6)Prestige no longer resets on row 1 reset and prestige resets nothing",
+        cost: new Decimal(15),
+        unlocked() { return hasUpgrade("hp", 15) },
+        },
     }})
     
