@@ -12,11 +12,18 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6",
-	name: "Achievements",
+	num: "0.7",
+	name: "Again, long break...",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.7</h3><br>
+	- Sorry for the long break, again...<br>
+	- Added layer named Levels!<br>
+	- Added 1 milestone<br>
+	- Added a few achievements<br>
+	- Added a few upgrades<br>
+	- Hope you enjoy it!<br>
 	<h3>v0.6</h3><br>
 	- Finally added Achievements!<br>
 	- Added first milestone.<br>
@@ -92,6 +99,8 @@ function getPointGen() {
 	if (hasUpgrade('p', 45)) gain = gain.times(6)
 	if (hasUpgrade('p', 51)) gain = gain.times(1.015)
 	if (hasUpgrade('p', 52)) gain = gain.times(1.001)
+	if (hasUpgrade('p', 54)) gain = gain.times(5)
+	if (hasUpgrade('p', 55)) gain = gain.times(3)
 	if (hasUpgrade('sp', 11)) gain = gain.times(3)
 	if (hasUpgrade('sp', 12)) gain = gain.times(10)
 	if (hasUpgrade('sp', 13)) gain = gain.times(upgradeEffect('sp', 13))

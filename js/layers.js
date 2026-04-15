@@ -1,3 +1,4 @@
+
 addLayer("a", {
     name: "Achievements",
     symbol: "A",
@@ -49,16 +50,22 @@ addLayer("a", {
             tooltip: "Buy Super Prestige Upgrade 12",
             done() { return hasUpgrade("sp", 12) },
         },
-    },
-
-    // Optional: Achievements can affect gain
-    gainMult() {
-        let mult = new Decimal(1)
-        if (hasAchievement("a", 11)) mult = mult.times(1.2) // +20% gain
-        if (hasAchievement("a", 12)) mult = mult.times(1.5) // +50% gain
-        return mult
-    },
-})
+        23: {
+            name: "my very good tree v2",
+            tooltip: "Inflation starts. Buy Hyper Prestige Upgrade 11",
+            done() { return hasUpgrade("hp", 11) },
+        },
+        24: {
+            name: "New upgrades!!!",
+            tooltip: "Unlock new upgrades in Prestige",
+            done() { return hasUpgrade("p", 53) },
+        },
+        25: {
+            name: "Levels?",
+            tooltip: "Unlock new layer or buy Prestige Upgrade 55",
+            done() { return hasUpgrade("p", 55) },
+        },
+    }}),
 addLayer("p", {
     name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "P", // This appears on the layer's node. Default is the id with the first letter capitalized
@@ -76,6 +83,10 @@ addLayer("p", {
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         let mult = new Decimal(1)
+        if (hasUpgrade("p", 53)) mult = mult.times(5)
+        if (hasUpgrade("p", 55)) mult = mult.times(3)
+        if (hasMilestone("l", 0))
+        mult = mult.times(10)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -103,6 +114,8 @@ addLayer("p", {
     let passive = new Decimal(0)
     if (hasUpgrade("sp", 15)) passive = passive.add(0.05) //5% Prestige Points depending on Reset
     if (hasUpgrade("sp", 31)) passive = passive.add(0.05)
+    if (hasUpgrade("hp", 22)) passive = passive.add(0.15)
+    if (hasUpgrade("hp", 23)) passive = passive.add(0.75)
     return passive
     },
         upgrades: {
@@ -245,6 +258,24 @@ addLayer("p", {
         cost: new Decimal(7150),
         unlocked() { return hasUpgrade("p", 51) },
     },
+        53: {
+        title: "(#22) True Ease",
+        description: "Welcome back, Human! x5 your prestige gain",
+        cost: new Decimal(1e13),
+        unlocked() { return hasUpgrade("hp", 52) },
+    },
+        54: {
+        title: "(#23) True Ease",
+        description: "Pre-last upgrade! x5 point gain!",
+        cost: new Decimal(3e15),
+        unlocked() { return hasUpgrade("p", 53) },
+    },
+        55: {
+        title: "(#NL3) True Ease",
+        description: "Last upgrade! x3 prestige and point gain! And unlock levels",
+        cost: new Decimal(5e15),
+        unlocked() { return hasUpgrade("p", 54) },
+    },
 }})
 addLayer("sp", {
     name: "super prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
@@ -252,7 +283,7 @@ addLayer("sp", {
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: false,
-		points: new Decimal(1e9),
+		points: new Decimal(0),
     }},
     color: "#ff0000",
     requires: new Decimal(5e9), // Can be a function that takes requirement increases into account
@@ -263,6 +294,8 @@ addLayer("sp", {
     exponent: 0.9, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasMilestone("l", 0))
+        mult = mult.times(5)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -272,7 +305,9 @@ addLayer("sp", {
     hotkeys: [
         {key: "s", description: "S: Reset for super prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true},
+    layerShown(){
+    return hasUpgrade("p", 52)
+    },
     autoPrestige() {
     return hasUpgrade("sp", 32)
     },
@@ -371,7 +406,7 @@ addLayer("hp", {
     position: 100, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: false,
-		points: new Decimal(5e20),
+		points: new Decimal(0),
     }},
     color: "#66ff00",
     requires: new Decimal(5e20), // Can be a function that takes requirement increases into account
@@ -382,6 +417,8 @@ addLayer("hp", {
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasMilestone("l", 0))
+        mult = mult.times(3)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -391,18 +428,27 @@ addLayer("hp", {
     hotkeys: [
         {key: "h", description: "H: Reset for hyper prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true},
+    layerShown(){
+    return hasUpgrade("sp", 34)
+    },
     milestones: {
     0: {
         requirementDescription: "100 Hyper Prestige Points",
         done() { return player.p.points.gte(100) },
         effectDescription: "First milestone! x5 HPP gain.",
     },
+    1: {
+        requirementDescription: "250 Hyper Prestige Points",
+        done() { return player.p.points.gte(250) },
+        effectDescription: "Double HPP gain!!!",
+    },
 },
 gainMult() {
     let mult = new Decimal(1)
      if (hasMilestone("hp", 0))
         mult = mult.times(5)
+    if (hasMilestone("hp", 1))
+        mult = mult.times(2)
     return mult
 },
     upgrades: {
@@ -441,5 +487,58 @@ gainMult() {
         cost: new Decimal(15),
         unlocked() { return hasUpgrade("hp", 15) },
         },
-    }})
-    
+        22: {
+        title: "(#HP7) Even More Easier",
+        description: "Upgrade your passive gain to 25%",
+        cost: new Decimal(35),
+        unlocked() { return hasUpgrade("hp", 21) },
+        },
+        23: {
+        title: "(#HP8) Full Automation Prestige",
+        description: "Upgrade your passive gain to 100%",
+        cost: new Decimal(100),
+        unlocked() { return hasUpgrade("hp", 22) },
+        },
+        24: {
+        title: "(#HP9) New Upgrades!!! yayayayayay!",
+        description: "Unlock new upgrades in Prestige.",
+        cost: new Decimal(250),
+        unlocked() { return hasUpgrade("hp", 23) },
+        },
+}}),
+addLayer("l", {
+    name: "levels", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "L", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: false,
+		points: new Decimal(0),
+    }},
+    color: "#0066ff",
+    requires: new Decimal(5e25), // Can be a function that takes requirement increases into account
+    resource: "levels", // Name of prestige currency
+    baseResource: "points", // Name of resource prestige is based on
+    baseAmount() {return player.points}, // Get the current amount of baseResource
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.9, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 2, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "s", description: "L: Reset for levels!", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    layerShown(){
+    return hasUpgrade("p", 55)
+    },
+    milestones: {
+    0: {
+        requirementDescription: "1 Level",
+        done() { return player.p.points.gte(1) },
+        effectDescription: "Great! Your first level! x10 P, x5 SP, x3 HP!!!",
+    },
+}})
