@@ -42,8 +42,8 @@ addLayer("a", {
         },
         21: {
             name: "New Layer",
-            tooltip: "Buy Prestige Upgrade 45",
-            done() { return hasUpgrade("p", 45) },
+            tooltip: "Buy Prestige Upgrade 52",
+            done() { return hasUpgrade("p", 52) },
         },
         22: {
             name: "BIG boost",
@@ -61,7 +61,7 @@ addLayer("a", {
             done() { return hasUpgrade("p", 53) },
         },
         25: {
-            name: "Levels?",
+            name: "NG-?",
             tooltip: "Unlock new layer or buy Prestige Upgrade 55",
             done() { return hasUpgrade("p", 55) },
         },
@@ -85,8 +85,7 @@ addLayer("p", {
         let mult = new Decimal(1)
         if (hasUpgrade("p", 53)) mult = mult.times(5)
         if (hasUpgrade("p", 55)) mult = mult.times(3)
-        if (hasMilestone("l", 0))
-        mult = mult.times(10)
+        
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -272,7 +271,7 @@ addLayer("p", {
     },
         55: {
         title: "(#NL3) True Ease",
-        description: "Last upgrade! x3 prestige and point gain! And unlock levels",
+        description: "Last upgrade! x3 prestige and point gain! And unlock kgiEJ;",
         cost: new Decimal(5e15),
         unlocked() { return hasUpgrade("p", 54) },
     },
@@ -294,8 +293,6 @@ addLayer("sp", {
     exponent: 0.9, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (hasMilestone("l", 0))
-        mult = mult.times(5)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -417,8 +414,6 @@ addLayer("hp", {
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (hasMilestone("l", 0))
-        mult = mult.times(3)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -430,26 +425,6 @@ addLayer("hp", {
     ],
     layerShown(){
     return hasUpgrade("sp", 34)
-    },
-    milestones: {
-    0: {
-        requirementDescription: "100 Hyper Prestige Points",
-        done() { return player.p.points.gte(100) },
-        effectDescription: "First milestone! x5 HPP gain.",
-    },
-    1: {
-        requirementDescription: "250 Hyper Prestige Points",
-        done() { return player.p.points.gte(250) },
-        effectDescription: "Double HPP gain!!!",
-    },
-},
-gainMult() {
-    let mult = new Decimal(1)
-     if (hasMilestone("hp", 0))
-        mult = mult.times(5)
-    if (hasMilestone("hp", 1))
-        mult = mult.times(2)
-    return mult
 },
     upgrades: {
         11: {
@@ -505,40 +480,4 @@ gainMult() {
         cost: new Decimal(250),
         unlocked() { return hasUpgrade("hp", 23) },
         },
-}}),
-addLayer("l", {
-    name: "levels", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "L", // This appears on the layer's node. Default is the id with the first letter capitalized
-    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
-    startData() { return {
-        unlocked: false,
-		points: new Decimal(0),
-    }},
-    color: "#0066ff",
-    requires: new Decimal(5e25), // Can be a function that takes requirement increases into account
-    resource: "levels", // Name of prestige currency
-    baseResource: "points", // Name of resource prestige is based on
-    baseAmount() {return player.points}, // Get the current amount of baseResource
-    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.9, // Prestige currency exponent
-    gainMult() { // Calculate the multiplier for main currency from bonuses
-        mult = new Decimal(1)
-        return mult
-    },
-    gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
-    },
-    row: 2, // Row the layer is in on the tree (0 is the first row)
-    hotkeys: [
-        {key: "s", description: "L: Reset for levels!", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
-    ],
-    layerShown(){
-    return hasUpgrade("p", 55)
-    },
-    milestones: {
-    0: {
-        requirementDescription: "1 Level",
-        done() { return player.p.points.gte(1) },
-        effectDescription: "Great! Your first level! x10 P, x5 SP, x3 HP!!!",
-    },
 }})
