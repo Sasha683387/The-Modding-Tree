@@ -1,6 +1,8 @@
+
 // ==========================================
 // ROW 0: PRESTIGE LAYER (GREEN) - 7 CHALLENGE UPGRADES
 // ==========================================
+
 addLayer("p", {
     name: "Prestige",
     symbol: "P",
