@@ -59,8 +59,19 @@ function setGridData(layer, id, data) {
 }
 
 function upgradeEffect(layer, id) {
-	return (tmp[layer].upgrades[id].effect)
+    // 1. Проверяем, существует ли вообще слой и его база апгрейдов в данный тик
+    if (!tmp[layer] || !tmp[layer].upgrades) return new Decimal(1);
+    
+    // 2. Проверяем, существует ли конкретный апгрейд с этим ID
+    if (!tmp[layer].upgrades[id]) return new Decimal(1);
+    
+    // 3. Проверяем, прописан ли у этого апгрейда математический эффект
+    if (tmp[layer].upgrades[id].effect === undefined) return new Decimal(1);
+    
+    // Если всё на месте — возвращаем реальный эффект апгрейда!
+    return tmp[layer].upgrades[id].effect;
 }
+
 
 function challengeEffect(layer, id) {
 	return (tmp[layer].challenges[id].rewardEffect)
