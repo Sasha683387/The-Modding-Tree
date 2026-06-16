@@ -14,12 +14,19 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.0",
-	name: "Release!",
+	num: "1.1",
+	name: "Bug fixes and more!",
 }
 
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v1.1 - Bug fixes and more!</h3><br>
+        - Endgame: 12 boosters!<br>
+		- Rebalanced the game!<br>
+        - Added milestones and 1 challenge!!!!<br>
+        - Fixed bugs! now game is playable again!<br>
+		- Added achevements!<br>
+		- Added 12 news ticker messages.<br><br>
 	<h3>v1.0 - Release!</h3><br>
         - Endgame: Challenge Zero Efficiency completed.<br>
         - Added 16 news ticker messages<br>
@@ -44,43 +51,52 @@ function canGenPoints(){
 
 // Calculate points/sec!
 function getPointGen() {
-	if (!canGenPoints()) return new Decimal(0)
+    if (!canGenPoints()) return new Decimal(0)
 
-	let gain = new Decimal(1) // Базовый доход
+    let gain = new Decimal(1)
 
-	// 1. БУСТЫ ОТ СЛОЯ PRESTIGE (В обычном режиме работает вся сетка 11-23)
-	if (!inChallenge('nb', 11)) {
-		if (hasUpgrade('p', 11)) gain = gain.times(2)
-		if (hasUpgrade('p', 21)) gain = gain.times(upgradeEffect('p', 21))
-		if (hasUpgrade('p', 23)) gain = gain.times(upgradeEffect('p', 23))
-	}
+    if (hasUpgrade('p', 11)) gain = gain.times(2)
+    if (hasUpgrade('p', 21)) gain = gain.times(upgradeEffect('p', 21))
+    if (hasUpgrade('p', 23)) gain = gain.times(upgradeEffect('p', 23))
 
-	// 🔥 ВНУТРИ ЧЕЛЛЕНДЖА работают ВСЕ 7 хардкорных престиж-апгрейдов (101-107)
-	if (inChallenge('nb', 11)) {
-		if (hasUpgrade('p', 101)) gain = gain.times(5)
-		if (hasUpgrade('p', 103)) gain = gain.times(upgradeEffect('p', 103))
-		if (hasUpgrade('p', 104)) gain = gain.times(upgradeEffect('p', 104)) // Буст от Not Boosters
-		if (hasUpgrade('p', 106)) gain = gain.times(upgradeEffect('p', 106)) // Кубический буст от количества кнопок
-		if (hasUpgrade('p', 107)) gain = gain.times(150) // Финальный прорыв 150х!
-	}
+    let boosters = player.b.points
+    if (boosters.gt(0)) {
+        let boosterMult = new Decimal(1)
+        if (inChallenge('nb', 11)) {
+            boosterMult = boosters.add(1).pow(0.5) 
+        } else {
+            boosterMult = boosters.add(1).pow(1.75)
+        }
+        gain = gain.times(boosterMult)
+    }
 
-	// 2. Формула Бустеров (X^2 или X^1)
-	let boosters = player.b.points
-	if (boosters.gt(0)) {
-		if (inChallenge('nb', 11)) {
-			gain = gain.times(boosters) // Дебафф челленджа
-		} else {
-			gain = gain.times(boosters.pow(2)) // Стандартный режим
-		}
-	}
+    if (hasUpgrade('p', 32)) gain = gain.times(upgradeEffect('p', 32))
+    if (hasUpgrade('nb', 12)) gain = gain.times(upgradeEffect('nb', 12))
 
-	// 3. Бусты от слоя Not Boosters (работают только вне челленджа)
-	if (hasUpgrade('nb', 12) && !inChallenge('nb', 11)) {
-		gain = gain.times(upgradeEffect('nb', 12))
-	}
+    if (inChallenge('nb', 11)) {
+        if (hasUpgrade('p', 101)) gain = gain.times(4)
+        if (hasUpgrade('p', 103)) gain = gain.times(upgradeEffect('p', 103))
+        if (hasUpgrade('p', 104)) gain = gain.times(upgradeEffect('p', 104))
+        if (hasUpgrade('p', 106)) gain = gain.times(upgradeEffect('p', 106))
+        if (hasUpgrade('p', 107)) gain = gain.times(40)
+    }
 
-	return gain
+    if (inChallenge('nb', 12)) gain = gain.sqrt()
+
+    if (player.a && player.a.points.gt(0)) {
+        let achBoost = player.a.points.times(0.10).add(1)
+        gain = gain.times(achBoost)
+    }
+
+    if (hasAchievement('a', 31)) {
+        gain = gain.times(1.5)
+    }
+
+    return gain
 }
+
+
+
 
 
 
@@ -119,6 +135,18 @@ function fixOldSave(oldVersion){
 // Your exact custom news ticker sentences
 function getNewsTicker() {
     let news = [
+		"T H I S message is not hardcapped or softca",
+		"Why randim82(or randim83 idk) called random?",
+		"Next upda- WHY IM SHOWING THIS SECOND TIME? IM REAL IM REA(reached limit of characters)",
+		"Why are you playing th- Oh why im showing this second time? Im real? Or im NOTHING? No one knows...",
+		"Now this game have (number) layers, (number) challenges and more!",
+		"News: AI is taking world!",
+		"This message has message!",
+		"Click this link to get free robux: (please imagine what this is rickroll)",
+		"In this game is currently 25+ news ticker messages!",
+		"W - W Man",
+		"Man! This game is cool! - Unknown Man",
+		"go touch grass!",
 		"Why Oleg is angry",
 		"Thismessageislong!",
 		"Why flame is called FlamemasterNXF",
